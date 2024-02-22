@@ -1,18 +1,67 @@
 <template>
-    <div class="custom-checkbox">
-      <input type="checkbox" :id="id" :checked="done">
-      <label class="checkbox-label" :for="id">{{ label }}</label>
+    <div class="stack-small" v-if="isEditing">
+        <div class="custom-checkbox">
+        <input 
+            type="checkbox" 
+            :id="id" 
+            :checked="done"
+            @change="$emit('checkbox-changed')">
+        <label class="checkbox-label" :for="id">{{ label }}</label>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn" @click="toggleToItemEditForm">
+                Edit <span class="visually-hidden">{{label}}</span>
+            </button>
+            <button type="button" class="btn btn__danger" @click="deleteToDo">
+                Delete <span class="visually-hidden">{{label}}</span>
+            </button>
+        </div>
+
     </div>
+    <to-do-item-edit-form 
+        v-else 
+        :id="id" 
+        :label="label"
+        @item-edited="itemEdited"
+        @edit-cancelled="editCancelled"
+        />
+
+    
 </template>
 
 <script setup>
+    import ToDoItemEditForm from "./ToDoItemEditForm.vue"
 
+    const emit = defineEmits(['todo-added'])
     import {ref} from 'vue'
+
     const props = defineProps({
         label: {required: true, type: String},
         done: {default: false, type: Boolean},
         id: {required: true, type: String}
     })
+
+    const isDone = props.done 
+    var isEditing = false
+
+    function deleteToDo() {
+      emit('item-deleted');
+    }
+    function toggleToItemEditForm() {
+      isEditing = true
+      console.log(isEditing)
+    }
+    function editCancelled() {
+        isEditing = false
+        console.log("editCancelled", isEditing)
+    }
+    function itemEdited(newLabel) {
+        emit('item-edited', newLabel);
+        isEditing = false;
+        console.log("itemEdited", isEditing)
+    }
+
+
 </script>
 
 <style scoped>
