@@ -28,6 +28,7 @@
         {id: _.uniqueId('todo-'), label: "Create a Vue project with the CLI", done: true },
         {id: _.uniqueId('todo-'), label: "Have fun", done: true },
         {id: _.uniqueId('todo-'), label: "Create a to-do list", done: false },
+        {id: _.uniqueId('todo-'), label: "Create another  to-do list", done: true },
     ])
     function addToDo(toDoLabel){
         ToDoItems.push({id:_.uniqueId('todo-'), label: toDoLabel, done: false});
