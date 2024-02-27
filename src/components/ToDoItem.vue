@@ -61,7 +61,6 @@
       isEditing.value = false 
     }
 
-
     function itemEdited(newLabel) {
       emit('item-edited', newLabel)
       isEditing.value = false
