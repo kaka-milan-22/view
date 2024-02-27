@@ -8,7 +8,9 @@
                     :label="item.label" 
                     :done="item.done"
                     :id="item.id"
-                    @checkbox-changed="updateDoneStatus(item.id)"/>
+                    @checkbox-changed="updateDoneStatus(item.id)"
+                    @item-deleted="deleteToDo(item.id)"
+                    @item-edited="editToDo(item.id, $event)"/>
             </li>
         </ul>
     </div>
@@ -43,7 +45,14 @@
         return `${numberFinishedItems} out of ${ToDoItems.length} items completed`
     })
 
-
+    function editToDo(toDoId, newLabel) {
+        const toDoToEdit = this.ToDoItems.find((item) => item.id === toDoId);
+        toDoToEdit.label = newLabel;
+    }
+    function deleteToDo(toDoId) {
+        const itemIndex = ToDoItems.findIndex((item) => item.id === toDoId);
+        ToDoItems.splice(itemIndex, 1);
+    }
 
 </script>
 

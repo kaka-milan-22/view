@@ -24,20 +24,24 @@
 
 <script setup>
 
-    // import {ref} from 'vue'
-    const emit = defineEmits(['onSubmit', 'onCancel'])
+    import {ref} from 'vue'
+    const emit = defineEmits([
+        'onSubmit', 
+        'onCancel',
+        'edit-cancelled',
+        'item-edited'
+    ])
 
     const props = defineProps({
         label: {required: true, type: String},
         id: {required: true, type: String}
     })
     
-    const newLabel = props.label
+    const newLabel = ref(props.label)
 
     function onSubmit(toDoLabel){
-        console.log("save")
         if (newLabel && newLabel !== props.label) {
-          emit("item-edited", this.newLabel);
+          emit("item-edited", newLabel);
         }
     }
 
